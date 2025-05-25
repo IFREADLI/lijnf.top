@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PoseNet姿态检测</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="基于TensorFlow.js的实时人体姿态检测">
+        <meta name="keywords" content="PoseNet,姿态检测,TensorFlow.js,AI">
+        <!-- 引入样式和脚本 -->
+        <link rel="stylesheet" href="style.css">
+        <!-- TensorFlow.js -->
+        <script src="https://unpkg.com/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+        <!-- PoseNet -->
+        <script src="https://unpkg.com/@tensorflow-models/posenet@2.2.1/dist/posenet.min.js"></script>
+        <!-- 主程序 -->
+        <script src="main.js" defer></script>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>姿态检测</h1>
+                <p class="description">基于TensorFlow.js和PoseNet模型的实时人体姿态检测</p>
+            </header>
+
+            <main>
+                <div id="demo">
+                    <!-- 视频捕获区域 -->
+                    <div id="wrap" class="video-container">
+                        <video id="video" width="640" height="480" autoplay playsinline></video>
+                        <!-- Canvas覆盖层 -->
+                        <canvas id="draw"></canvas>
+                    </div>
+                </div>
+
+                <!-- 状态显示 -->
+                <div class="status-container">
+                    <p id="status" class="status-text"></p>
+                </div>
+
+                <!-- 控制面板 -->
+                <div class="controls">
+                    <div class="control-group">
+                        <label>显示模式:</label>
+                        <div class="mode-switch">
+                            <button id="normal-mode" class="mode-btn active">正常模式</button>
+                            <button id="abstract-mode" class="mode-btn">抽象模式</button>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="threshold">检测阈值:</label>
+                        <input type="range" id="threshold" min="0" max="1" step="0.1" value="0.3">
+                        <span id="threshold-value">0.3</span>
+                    </div>
+                    <div class="control-group">
+                        <label for="fps">FPS限制:</label>
+                        <input type="range" id="fps-control" min="1" max="60" step="1" value="30">
+                        <span id="fps-value">30</span>
+                    </div>
+                </div>
+
+                <!-- 日志面板 -->
+                <div class="log-panel">
+                    <div class="log-header">
+                        <h3>检测日志</h3>
+                        <div class="stats">
+                            <span>FPS: <span id="current-fps">0</span></span>
+                            <span>检测数: <span id="detection-count">0</span></span>
+                        </div>
+                    </div>
+                    <div class="log-content" id="log-content"></div>
+                </div>
+            </main>
+
+            <footer>
+                <div class="links">
+                    <p>相关链接：</p>
+                    <ul>
+                        <li>
+                            <a href="https://github.com/tensorflow/tfjs-models/tree/master/posenet" 
+                               target="_blank" rel="noopener noreferrer">
+                               PoseNet官方文档
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://allan5.com/FE-AI/" 
+                               target="_blank" rel="noopener noreferrer">
+                               前端智能DEMO合集
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <p class="copyright">© 2024 PoseNet Demo. All rights reserved.</p>
+            </footer>
+        </div>
+
+        <!-- 返回顶部按钮 -->
+        <div class="back-to-top" onclick="scrollToTop()">
+            <svg width="20" height="20" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+            </svg>
+        </div>
+
+        <!-- 加载提示 -->
+        <div id="loading-overlay" class="loading-overlay">
+            <div class="loading-spinner"></div>
+            <p>正在加载模型...</p>
+        </div>
+    </body>
+</html>
